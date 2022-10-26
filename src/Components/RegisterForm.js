@@ -67,8 +67,7 @@ export default function RegisterForm() {
             errors: [],
             validations: {
                 required: true,
-                pattern: { pattern: /\d\w/, error: ["password must contain numbers", "password must conatain characters"] },
-                minLength: 8
+                pattern: { pattern: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/, error: ["Minimum password length is eight characters.", "Password must contain at least one letter and one number"] },
             }
         },
         confirmPassword: {
@@ -95,9 +94,10 @@ export default function RegisterForm() {
                 canValidate = false
             }
         }
-        setUser({ ...user })
         if (canValidate) {
-            
+            navigate('/NewUserDetails', { state: { user: user } })
+        } else {
+            setUser({ ...user })
         }
     };
 
@@ -121,7 +121,6 @@ export default function RegisterForm() {
                     <Row>
                         <TextInput
                             handelChange={handelChange}
-                            validate={user.firstName.errors.length == 0}
                             label={"First Name"}
                             type={"text"}
                             name={"firstName"}
@@ -133,7 +132,6 @@ export default function RegisterForm() {
 
                         <TextInput
                             handelChange={handelChange}
-                            validate={user.lastName.errors.length == 0}
                             label={"Last Name"}
                             type={"text"}
                             name={"lastName"}
@@ -160,14 +158,13 @@ export default function RegisterForm() {
                                 {["Female", "Male", "Other"].map((radio, index) => <Form.Check key={index} onBlur={handelChange} name="gender" inline type="radio" label={radio} value={radio} />)}
                             </Form.Group>
                             <Form.Text className='error'>
-                               {user.gender.errors.map((error, index) => <li key={index}>{error}</li>)}
+                                {user.gender.errors.map((error, index) => <li key={index}>{error}</li>)}
                             </Form.Text>
                         </Col>
                     </Row>
                     <Row>
                         <TextInput
                             handelChange={handelChange}
-                            validate={user.email.errors.length == 0}
                             label={"Email"} name={"email"}
                             type={"Email"}
                             error={user.email.errors || "hi"}
@@ -180,7 +177,6 @@ export default function RegisterForm() {
 
                     <TextInput
                         handelChange={handelChange}
-                        validate={user.password.errors.length == 0}
                         label={"Password"}
                         type={"password"}
                         name={"password"}
@@ -192,7 +188,6 @@ export default function RegisterForm() {
 
                     <TextInput
                         handelChange={handelChange}
-                        validate={user.confirmPassword.errors.length == 0}
                         label={"Confirm Password"}
                         type={"password"}
                         name={"confirmPassword"}
@@ -212,6 +207,6 @@ export default function RegisterForm() {
         </Container>
 
     )
-    
+
 }
 
