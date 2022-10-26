@@ -1,4 +1,6 @@
 
-export default function RegisterForm(){
+
+export default function RegisterForm() {
     
 }
+
