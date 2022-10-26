@@ -3,8 +3,6 @@ import Col from 'react-bootstrap/Col'
 
 
 
-
-
 export default function TextInput(props) {
     return (
         <Col lg={props.sizeLG} xs={props.sizeXS}>
